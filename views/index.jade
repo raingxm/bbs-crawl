@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    title= "find what you want"
+    meta(http-equiv="Content-type", content='text/html; charset=utf-8')
+    meta(name="viewport", content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1")
+    link(rel="stylesheet", href="/static/swiper/swiper.min.css")
+    link(rel="stylesheet", href="/static/main/main.css")
+  body
+    h1 Find Who you like
+    .swiper-container
+      .swiper-wrapper
+        each article in articles
+          each photo in article.images
+            .swiper-slide
+              a(href="#{article.url}", target="_blank")
+                img(src="#{photo}")
+      .swiper-button-prev
+      .swiper-button-next
+  script(src="/static/jquery/jquery.min.js")
+  script(src="/static/swiper/swiper.min.js")
+  script(src="/static/main/main.js")

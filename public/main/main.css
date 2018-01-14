@@ -1,0 +1,15 @@
+.swiper-container {
+  width: 300px;
+  height: 400px;
+  margin: 0 auto;
+  border: 10px solid #ffffff;
+}
+
+body {
+  background-color: #F27065;
+}
+
+h1 {
+  text-align: center;
+  color: #ffffff;
+}

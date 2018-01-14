@@ -1,0 +1,26 @@
+.header {
+  background: #fff;
+  height: 80px;
+  margin-bottom: 24px;
+  font-size: 20px;
+  padding: 0 48px;
+  width: 100%;
+  text-align: center;
+}
+
+.header .title {
+  line-height: 80px;
+}
+
+.content {
+  border-radius: 4px;
+  padding: 24px 0 0;
+  margin: 0 48px 24px;
+  background: #fff;
+  border: 1px solid #d5d5d5;
+  min-height: 600px;
+}
+
+#root .ant-list-item {
+  border-bottom: none;
+}
