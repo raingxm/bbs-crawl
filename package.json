@@ -17,7 +17,7 @@
   "dependencies": {
     "antd": "^3.0.0",
     "async": "^2.4.1",
-    "axios": "^0.17.1",
+    "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.1",
     "express": "^4.15.3",
     "image-downloader": "^3.3.0",
