@@ -5,14 +5,34 @@ let mongoose = require('mongoose');
 
 let ArticleModel = mongoose.model('Article');
 
+const cache = {
+
+};
+
 module.exports = {
-  fetchArticlesContent: function(articleUrls) {
-    articleUrls.map(url => {
+  fetchArticlesContent: function(articles) {
+    let articleUrls = articles.map(article => article.url);
+    if (Object.keys(cache).length !== 0) {
+      articles.forEach(article => {
+        let cacheContent = cache[article.url];
+        if (cacheContent && cacheContent.publish) {
+          article.publish = cacheContent.publish;
+          article.content = cacheContent.content;
+        }
+      });
+      return;
+    }
+
+    articleUrls.map((url) => {
       this.fetchArticleContentByUrl(url, function(err, result) {
         if (err) {
           return ;
         }
-        saveArticleContentToDb(url, result.content, result.images);
+        // saveArticleContentToDb(url, result.content, result.images);
+        cache[url] = {
+          publish: result.publish,
+          content: result.content
+        };
       });
     });
   },
@@ -27,11 +47,18 @@ module.exports = {
         var rawcontentHtml = $('#filecontent').html();
         var content = $('#filecontent').text();
         var images = parseImageInContent(rawcontentHtml);
+        let publish = '';
 
+        const pattern = /发信站: 兵马俑BBS \((.+)?\), 本站\(bbs\.xjtu\.edu\.cn\)/gm;
+        let matches = pattern.exec(content);
+        if (matches && matches.length === 2) {
+          publish = matches[1];
+        }
         callback(null, {
           url: url,
           content: content,
-          images: images
+          images: images,
+          publish: publish
         });
       });
   },

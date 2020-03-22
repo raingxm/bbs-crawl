@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Menu, Icon } from 'antd';
@@ -11,18 +11,20 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    return (
-      <div>
-        <Header/>
-        <MainContent/>
-      </div>
-    );
+    // return (
+    //   // <div className="crawl">
+    //   //   <Header/>
+    //   //   <MainContent/>
+    //   // </div>
+    //   <div>haha</div>
+    // );
+    return null;
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<div>test</div>, document.getElementById('root'));

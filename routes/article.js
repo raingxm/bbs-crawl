@@ -44,24 +44,44 @@ module.exports = {
     }
 
     var crawlUrls = getCrawlPageUrls();
+    crawlUrls = crawlUrls.slice(-300);
 
     async.mapLimit(crawlUrls, 5, function (url, callback) {
       fetchUrl(url, callback);
     }, function (err, result) {
       result = _.flatten(result);
       result = result.filter(filterArticle);
-      for (let article of result) {
-        saveArticleToDb(article);
-      }
+      // result = result.reverse().slice(0, 500);
+      // for (let article of result) {
+      //   saveArticleToDb(article);
+      // }
 
-      let articleUrls = result.map(article => article.url);
-      console.log(articleUrls);
-      articleCrawl.fetchArticlesContent(articleUrls);
+      // let articleUrls = result.map(article => article.url);
+      // console.log(articleUrls);
+      articleCrawl.fetchArticlesContent(result);
+
+      let articles = result.filter(article => {
+        if (article.publish) {
+          if (article.content && article.content.indexOf('guersisi') !== -1) {
+            return true;
+          }
+          if (article.publish.indexOf('2016') !== -1 || article.publish.indexOf('2017') !== -1 ||
+            article.publish.indexOf('2018') !== -1 || article.publish.indexOf('2019') !== -1
+          || article.publish.indexOf('2020') !== -1) {
+            if (article.content.indexOf('微信') !== -1 || article.content.indexOf('weixin') !== -1 ||
+              article.content.indexOf('qq') !== -1 || article.content.indexOf('QQ') !== -1) {
+              return true;
+            }
+          }
+          return true;
+        }
+        return true;
+      });
 
       res.json({
         status: 'success',
-        count: result.length,
-        articles: result
+        count: articles.length,
+        articles: articles
       })
     });
   },
@@ -129,13 +149,13 @@ function fetchUrl(url, callback) {
           url: `${CRAWL_BASE_URL}/${$title.attr("href")}`
         });
       });
-      console.log(items);
+      // console.log(items);
       callback(null, items);
     });
 }
 
 function getCrawlPageUrls() {
-  var articleCount = 20875;
+  var articleCount = 24629;
   var currentPosition = 1;
   var page_article_count = 20,
     urls = [],
